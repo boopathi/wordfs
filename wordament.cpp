@@ -148,12 +148,12 @@ int main(int argc, char* argv[]) {
     }
     cout<<"Now start searching : "<<endl;
     FOR(i,4) { FOR(j,4) cout<<M[i][j]<<" "; cout<<endl; }
-    int t=GI;
-    while(t-->0) {
-    	char str[20];
-    	scanf("%s",str);
+    char str[20];
+    scanf("%s",str);
+    while(strlen(str) > 2) {
     	if(matrixSearch(string(str)) && db->search(string(str)) ) cout<<"Found"<<endl;
     	else cout<<"NOT Found"<<endl;
+    	scanf("%s",str);
     }
 	return 0;
 }
