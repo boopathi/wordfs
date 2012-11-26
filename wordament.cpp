@@ -99,38 +99,24 @@ bool Trie::search(string s) {
 }
 
 //Matrix - Find a string in matrix
-char M[4][4] = { 
-	'i', 'p', 'r', 'x',
-	'e', 'd', 'e', 'm',
-	'g', 't', 'a', 't',
-	'h', 'g', 'i', 't'
-} ;
+char M[4][4];
 
 bool dfs(char s[40], int l, int x, int i, int j, bool (&v)[4][4]) {
-	//surrounding chars
-	//M[i-1][j-1],	M[i-1][j],	M[i-1][j+1]
-	//M[i][j-1],	M[i][j],	M[i][j+1]
-	//M[i+1][j-1],	M[i+1][j],	M[i+1][j+1]
-	//current element = s[x] where s[x-1] is found
-	//boundary
-	if(i<0 || i>4 || j<0 || j>4) return false;
-	//if visited,
+	if(i<0 || i>4 || j<0 || j>4) return false; //boundary
 	if(v[i][j]) return false;
-	//for i,j
 	if(s[x] == M[i][j]) {
 		if(x==l) return true;
 		v[i][j]=true;
-		bool result = 	dfs(s,l,x+1,i-1,j-1,v) ||
-						dfs(s,l,x+1,i-1,j,v) ||
-						dfs(s,l,x+1,i-1,j+1,v) ||
-						dfs(s,l,x+1,i,j-1,v) ||
-						dfs(s,l,x+1,i,j+1,v) ||
-						dfs(s,l,x+1,i+1,j-1,v) ||
-						dfs(s,l,x+1,i+1,j,v) ||
-						dfs(s,l,x+1,i+1,j+1,v);
-		//backtrack
-		v[i][j]=false;
-		return result;
+		bool r = dfs(s,l,x+1,i-1,j-1,v) ||	// left top
+			dfs(s,l,x+1,i-1,j,v) || 		// top
+			dfs(s,l,x+1,i-1,j+1,v) || 		// right top
+			dfs(s,l,x+1,i,j-1,v) || 		// left
+			dfs(s,l,x+1,i,j+1,v) || 		// right
+			dfs(s,l,x+1,i+1,j-1,v) || 		// left bottom
+			dfs(s,l,x+1,i+1,j,v) || 		// bottom
+			dfs(s,l,x+1,i+1,j+1,v); 		// right bottom
+		v[i][j]=false; //backtrack
+		return r;
 	}
 	else return false;
 }
@@ -145,28 +131,28 @@ bool matrixSearch(string s) {
 }
 
 int main(int argc, char* argv[]) {
-	int n=4;
+	int n=4, c=0;
     char buffer[40]; 
-    int c=0;//number of words
+    
+    //INPUT - matrix
+    FOR(i,4) scanf("%s", M[i]);
+    
     Trie* db = new Trie();
     //populate the trie
     string file(argc==2 ? argv[1] : "wordlist");
     ifstream ff(file.c_str());
     while(true) {
     	ff>>buffer;
-    	db->add(string(buffer));
+    	if(matrixSearch(string(buffer))) { db->add(string(buffer)); c++; }
     	if(ff.eof()) break;
     }
     cout<<"Now start searching : "<<endl;
     FOR(i,4) { FOR(j,4) cout<<M[i][j]<<" "; cout<<endl; }
-    /*while(scanf("%s", buffer) == 1) {
-        db->add(string(buffer));
-    }*/
     int t=GI;
     while(t-->0) {
     	char str[20];
     	scanf("%s",str);
-    	if(matrixSearch(string(str))) cout<<"Found"<<endl;
+    	if(matrixSearch(string(str)) && db->search(string(str)) ) cout<<"Found"<<endl;
     	else cout<<"NOT Found"<<endl;
     }
 	return 0;
