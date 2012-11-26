@@ -1,3 +1,7 @@
+/*
+ * Author: Boopathi Rajaa <me@boopathi.in>
+ * Check README.md for installation instructions
+ */
 #include <vector>
 #include <list>
 #include <map>
