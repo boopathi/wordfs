@@ -140,7 +140,7 @@ bool matrixSearch(string s) {
 	bool v[4][4]; FOR(i,4) FOR(j,4) v[i][j]=false;
 	//find the starting points
 	FOR(i,4) FOR(j,4) if(s[0] == M[i][j]) 
-		if(dfs(strdup(s.c_str()),l,0,i,j,v)) return true;
+		if(dfs(strdup(s.c_str()),l-1,0,i,j,v)) return true;
 	return false;
 }
 
@@ -157,7 +157,8 @@ int main(int argc, char* argv[]) {
     	db->add(string(buffer));
     	if(ff.eof()) break;
     }
-    cout<<"Not start searching : "<<endl;
+    cout<<"Now start searching : "<<endl;
+    FOR(i,4) { FOR(j,4) cout<<M[i][j]<<" "; cout<<endl; }
     /*while(scanf("%s", buffer) == 1) {
         db->add(string(buffer));
     }*/
