@@ -130,6 +130,11 @@ bool matrixSearch(string s) {
 	return false;
 }
 
+//sort by string length
+bool sort_by_length(string a, string b) {
+	return a.length() < b.length();
+}
+
 int main(int argc, char* argv[]) {
 	int n=4, c=0;
     char buffer[40]; 
@@ -146,7 +151,7 @@ int main(int argc, char* argv[]) {
     	if(matrixSearch(string(buffer))) { db->add(string(buffer)); Found.PB(buffer); }
     	if(ff.eof()) break;
     }
-    sort(Found.begin(), Found.end());
+    sort(Found.begin(), Found.end(), sort_by_length);
     FOR(i,Found.size()) cout<<Found[i]<<"; "; cout<<endl;
     cout<<"Now start searching : "<<endl;
     FOR(i,4) { FOR(j,4) cout<<M[i][j]<<" "; cout<<endl; }
