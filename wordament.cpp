@@ -102,7 +102,7 @@ bool Trie::search(string s) {
 char M[4][4];
 
 bool dfs(char s[40], int l, int x, int i, int j, bool (&v)[4][4]) {
-	if(i<0 || i>4 || j<0 || j>4) return false; //boundary
+	if(i<0 || i>3 || j<0 || j>3) return false; //boundary
 	if(v[i][j]) return false;
 	if(s[x] == M[i][j]) {
 		if(x==l) return true;
@@ -133,7 +133,7 @@ bool matrixSearch(string s) {
 int main(int argc, char* argv[]) {
 	int n=4, c=0;
     char buffer[40]; 
-    
+    vector<string> Found;
     //INPUT - matrix
     FOR(i,4) scanf("%s", M[i]);
     
@@ -143,9 +143,11 @@ int main(int argc, char* argv[]) {
     ifstream ff(file.c_str());
     while(true) {
     	ff>>buffer;
-    	if(matrixSearch(string(buffer))) { db->add(string(buffer)); c++; }
+    	if(matrixSearch(string(buffer))) { db->add(string(buffer)); Found.PB(buffer); }
     	if(ff.eof()) break;
     }
+    sort(Found.begin(), Found.end());
+    FOR(i,Found.size()) cout<<Found[i]<<"; "; cout<<endl;
     cout<<"Now start searching : "<<endl;
     FOR(i,4) { FOR(j,4) cout<<M[i][j]<<" "; cout<<endl; }
     char str[20];
