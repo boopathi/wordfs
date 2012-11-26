@@ -148,7 +148,7 @@ int main(int argc, char* argv[]) {
     
     Trie* db = new Trie();
     //populate the trie
-    string file(argc==2 ? argv[1] : "wordlist");
+    string file(argc==2 ? argv[1] : "../wordlist");
     ifstream ff(file.c_str());
     while(true) {
     	ff>>buffer;
