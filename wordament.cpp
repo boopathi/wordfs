@@ -98,9 +98,15 @@ bool Trie::search(string s) {
     return false;
 }
 
+//Matrix - Find a string in matrix
+char matrix[5][5];
+bool matrixSearch(char s[40]) {
+	int l=strlen(s);
+	
+}
+
 int main() {
 	int n=4;
-	char a[5][5];
     char buffer[40];
     int c=0;
     Trie* db = new Trie();
