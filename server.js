@@ -41,8 +41,8 @@ app.configure( function () {
 });
 
 io.sockets.on('connection', function(socket) {
-    console.log("Connected" + socket);
-    socket.emit('initialize', { question: wordament.getMatrix() });
+    console.log("Connected boopathi" + socket);
+    socket.emit('question', { question: wordament.getMatrix().split(',').splice(0,4) });
     socket.on('answer', function(answer) {
         console.log(answer);
         socket.emit('result', {
@@ -53,12 +53,5 @@ io.sockets.on('connection', function(socket) {
 
 app.get('/', function(req,res) {
     res.render('index');
-})
-
-var solution = wordament.solution();
-var ss = "";
-for(var i=0;i<solution.length;i++)
-    ss = ss + ", "+ solution[i];
-console.log(ss);
-
+});
 

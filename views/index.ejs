@@ -5,13 +5,26 @@
         <link href="/static/style.css" type="text/css" rel="stylesheet" />
     </head>
     <body>
+    <div class="left circularbg">
         <div id="questionContainer">
             <div id="question">
-                
+                <% for(var i=0;i<4;i++) {%>
+                    <% for(var j=0;j<4;j++) {%>
+                        <div id="q<%= i %><%= j%>" class="qid"></div>
+                    <% } %>
+                <% } %>
             </div>
         </div>
         <input type="text" id="answer" />
+    </div>
+    <div class="right">
+        <div id="queueContainer">
+            <ul id="queue">
+            </ul>
+        </div>
+    </div> 
         <script src="/socket.io/socket.io.js"></script>
-        <scritp src="/static/script.js"></script>
+        <script src="/static/jquery.min.js"></script>
+        <script src="/static/script.js"></script>
     </body>
 </html>

@@ -127,7 +127,7 @@ void Matrix::get(char (&s)[4][4]) {
 
 string Matrix::get() {
 	string ret("");
-	FOR(i,4) ret+= string(M[i], 0, 4);
+	FOR(i,4) ret+= string(M[i], 0, 4) + string(",");
 	return ret;
 }
 
