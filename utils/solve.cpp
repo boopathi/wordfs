@@ -1,6 +1,6 @@
 /*
  * Author: Boopathi Rajaa <me@boopathi.in>
- * Check README.md for installation instructions
+ * Check README.md for Usage instructions
  */
 #include <vector>
 #include <list>
@@ -159,6 +159,9 @@ int main(int argc, char* argv[]) {
     FOR(i,Found.size()) cout<<Found[i]<<"; "; cout<<endl;
     cout<<"Now start searching : "<<endl;
     FOR(i,4) { FOR(j,4) cout<<M[i][j]<<" "; cout<<endl; }
+    //UNCOMMENT THIS SECTION IF YOU WANT TO CHECK WORDS
+    //SECTION STARTS HERE
+    /*
     char str[20];
     scanf("%s",str);
     while(strlen(str) > 2) {
@@ -166,6 +169,8 @@ int main(int argc, char* argv[]) {
     	else cout<<"NOT Found"<<endl;
     	scanf("%s",str);
     }
+    */
+    //SECTION ENDS HERE
 	return 0;
 }
 
