@@ -41,6 +41,7 @@
 
 using namespace v8;
 using namespace node;
+using namespace std;
 
 //Node stuff
 class Wordament:ObjectWrap {
@@ -49,9 +50,8 @@ public:
 	Wordament();
 	~Wordament();
 	static void Init(Handle<Object>);
-	static Handle<Boolean> make(const Arguments& args);
-	static Handle<Boolean> search(const Arguments& args);
-	static Handle<Array> getMatrix(const Arguments& args);
+	static Handle<Value> search(const Arguments& args);
+	static Handle<Value> getMatrix(const Arguments& args);
 	static Handle<Value> solution(const Arguments& args);
 };
 
@@ -78,7 +78,7 @@ private:
     Node* root;
 public:
     Trie();
-    ~Trie() {}
+    ~Trie();
     void add(string s);
     bool search(string s);
 };
@@ -87,13 +87,14 @@ public:
 class Matrix {
 private:
 	char M[4][4];
-	bool dfs(char s[40],int l, int x, int j, bool (&v)[4][4]);
+	bool dfs(char s[40],int l, int x, int i, int j, bool (&v)[4][4]);
 public:
 	Matrix();
 	Matrix(char (&s)[4][4]);
 	~Matrix();
 	bool search(string s);
 	void get(char (&s)[4][4]);
-}
+	string get();
+};
 
 #endif //NOLINT

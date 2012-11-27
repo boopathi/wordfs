@@ -41,11 +41,12 @@
 #include <ctime>
 #define REP(i,a,b) for(int (i)=(a);(i)<(b);(i)++)
 #define FOR(i,n) REP(i,0,n)
-#define THROW_RAW(str) ThrowException(Exception::New(str))
+#define THROW_RAW(str) ThrowException(Exception::Error(str))
 #define THROW(str) THROW_RAW(String::New(str))
 #define PB push_back
 using namespace v8;
 using namespace node;
+using namespace std;
 
 //First things are first
 //Trie definitions
@@ -63,7 +64,7 @@ Node* Node::find(char c) {
     }
     return NULL;
 }
-vector<Node*> getChildren() { return children; }
+vector<Node*> Node::getChildren() { return children; }
 //setters
 void Node::set(char c) { ch=c; }
 void Node::mark() { m=true; }
@@ -124,6 +125,12 @@ void Matrix::get(char (&s)[4][4]) {
 	FOR(i,4) FOR(j,4) s[i][j] = M[i][j]; // copy the values
 }
 
+string Matrix::get() {
+	string ret("");
+	FOR(i,4) ret+= string(M[i], 0, 4);
+	return ret;
+}
+
 bool Matrix::dfs(char s[40], int l, int x, int i, int j, bool (&v)[4][4]) {
 	if(i<0 || i>3 || j<0 || j>3) return false; //boundary
 	if(v[i][j]) return false;
@@ -166,14 +173,12 @@ vector<string> Solution;
 //Finally the node part
 void Wordament::Init(Handle<Object> target) {
 	HandleScope scope;
-	NODE_SET_METHOD(target, 'make', Wordament::make);
-	NODE_SET_METHOD(target, 'getMatrix', Wordament::getMatrix);
-	NODE_SET_METHOD(target, 'search', Wordament::search);
-	NODE_SET_METHOD(target, 'solution', Wordament::solution);
-}
-
-Handle<Value> Wordament::make(const Arguments& args) {
-	HandleScope scope;
+	//Set all handlers accessible by JavaScript
+	NODE_SET_METHOD(target, "getMatrix", Wordament::getMatrix);
+	NODE_SET_METHOD(target, "search", Wordament::search);
+	NODE_SET_METHOD(target, "solution", Wordament::solution);
+	
+	//Make the matrix
 	char buffer[25];
 	M = new Matrix();
 	db = new Trie();
@@ -185,29 +190,24 @@ Handle<Value> Wordament::make(const Arguments& args) {
 		if(ff.eof()) break;
 	}
 	sort(Solution.begin(), Solution.end(), sort_by_length);
-	return scope.Close(String::New("String made"));
 }
 
-Handle<Array> Wordament::solution(const Arguments& args) {
+Handle<Value> Wordament::solution(const Arguments& args) {
 	HandleScope scope;
 	int l = Solution.size();
 	Local<Array> found = Array::New(l);
 	FOR(i,l) found->Set(i, String::New(Solution[i].c_str()));
-	return scope.close(found);
+	return scope.Close(found);
 }
 
-Handle<Boolean> Wordament::getMatrix(const Arguments& args) {
+Handle<Value> Wordament::getMatrix(const Arguments& args) {
 	HandleScope scope;
-	char mat[4][4];
-	M->get(mat);
-	Local<Array> matrix = Array::New(4);
-	FOR(i,4) matrix->Set(i, String::New(mat[i]));
-	return scope.Close(matrix);
+	return scope.Close(String::New( (M->get()).c_str() ));
 }
 
-Handle<Boolean> Wordament::search(const Arguments& args) {
+Handle<Value> Wordament::search(const Arguments& args) {
 	HandleScope scope;
-	if(args->Length() < 1) return THROW("getMatrix: requires atleast 1 argument");
+	if(args.Length() < 1) return THROW("getMatrix: requires atleast 1 argument");
 	if(args[0]->IsString()) {
 		String::Utf8Value param(args[0]->ToString());
 		string query = string(*param);

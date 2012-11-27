@@ -15,3 +15,8 @@
 #other files
 *.out
 *~
+
+#node
+build
+.npm-debug
+
