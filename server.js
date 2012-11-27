@@ -16,7 +16,7 @@ var express = require('express'),
     params = require('express-params'),
     server = require('http').createServer(app).listen(process.env.PORT || 8080),
     ejs = require('ejs'),
-    socketio = require('socketio'),
+    io = require('socket.io').listen(server),
     _validate = require('validator'),
     wordament = require("./build/Release/wordament.node");
 
@@ -40,10 +40,19 @@ app.configure( function () {
     }); 
 });
 
-app.get('/', function(req,res) {
-    res.render('index', {
-        question: wordament.getMatrix();
+io.sockets.on('connection', function(socket) {
+    console.log("Connected" + socket);
+    socket.emit('initialize', { question: wordament.getMatrix() });
+    socket.on('answer', function(answer) {
+        console.log(answer);
+        socket.emit('result', {
+            correct: wordament.search(answer)
+        });
     });
+});
+
+app.get('/', function(req,res) {
+    res.render('index');
 })
 
 var solution = wordament.solution();
