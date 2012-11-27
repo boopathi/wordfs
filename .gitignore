@@ -19,4 +19,5 @@
 #node
 build
 .npm-debug
+node_modules
 

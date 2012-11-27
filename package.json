@@ -14,6 +14,7 @@
     "express": "3.x",
     "connect": "x",
     "ejs": "0.8.x",
+    "socket.io": "x",
     "passport": "x",
     "passport-google": "x",
     "passport-facebook": "x",
