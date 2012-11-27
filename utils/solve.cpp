@@ -157,11 +157,12 @@ int main(int argc, char* argv[]) {
     }
     sort(Found.begin(), Found.end(), sort_by_length);
     FOR(i,Found.size()) cout<<Found[i]<<"; "; cout<<endl;
-    cout<<"Now start searching : "<<endl;
-    FOR(i,4) { FOR(j,4) cout<<M[i][j]<<" "; cout<<endl; }
-    //UNCOMMENT THIS SECTION IF YOU WANT TO CHECK WORDS
+   //UNCOMMENT THIS SECTION IF YOU WANT TO CHECK WORDS
     //SECTION STARTS HERE
     /*
+    cout<<"Now start searching : "<<endl;
+    FOR(i,4) { FOR(j,4) cout<<M[i][j]<<" "; cout<<endl; }
+    
     char str[20];
     scanf("%s",str);
     while(strlen(str) > 2) {
