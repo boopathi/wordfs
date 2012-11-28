@@ -200,14 +200,14 @@ Handle<Value> Game::solution() {
 
 Handle<Value> Game::lookup(const Arguments& args) {
 	HandleScope scope;
-	if(args.Length() < 1) return THROW("getMatrix: requires atleast 1 argument");
+	if(args.Length() < 1) return False();
 	if(args[0]->IsString()) {
 		String::Utf8Value param(args[0]->ToString());
 		string query = string(*param);
 		if(M->search(query) && db->search(query)) return True();
 		return False();
 	}
-	return THROW("getMatrix: requires a string argument");
+	return False();
 }
 
 /*
