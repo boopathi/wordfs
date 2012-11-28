@@ -42,6 +42,7 @@ app.configure( function () {
 
 io.sockets.on('connection', function(socket) {
     console.log("Connected boopathi" + socket);
+    var game = wordament.create();
     socket.emit('question', { question: wordament.getMatrix().split(',').splice(0,4) });
     socket.on('answer', function(answer) {
         console.log(answer);

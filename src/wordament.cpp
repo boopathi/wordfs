@@ -39,6 +39,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
+#include <iostream>
 #define REP(i,a,b) for(int (i)=(a);(i)<(b);(i)++)
 #define FOR(i,n) REP(i,0,n)
 #define THROW_RAW(str) ThrowException(Exception::Error(str))
@@ -165,20 +166,11 @@ bool sort_by_length(string a, string b) {
 	return a.length() < b.length();
 }
 
-// Using Global evils
-Matrix* M;
-Trie* db;
-vector<string> Solution;
-
-//Finally the node part
-void Wordament::Init(Handle<Object> target) {
-	HandleScope scope;
-	//Set all handlers accessible by JavaScript
-	NODE_SET_METHOD(target, "getMatrix", Wordament::getMatrix);
-	NODE_SET_METHOD(target, "search", Wordament::search);
-	NODE_SET_METHOD(target, "solution", Wordament::solution);
-	
+//Game instances
+Game::Game() {
 	//Make the matrix
+	
+	//MATRIX INIT BEGIN
 	char buffer[25];
 	M = new Matrix();
 	db = new Trie();
@@ -190,8 +182,69 @@ void Wordament::Init(Handle<Object> target) {
 		if(ff.eof()) break;
 	}
 	sort(Solution.begin(), Solution.end(), sort_by_length);
+	//MATRIX INIT END
+}
+Game::~Game() { }
+
+//getters
+Handle<Value> Game::matrix() {
+	return String::New( (M->get()).c_str() );
 }
 
+Handle<Value> Game::solution() {
+	int l=Solution.size();
+	Local<Array> found = Array::New(l);
+	FOR(i,l) found->Set(i, String::New(Solution[i].c_str()));
+	return found;
+}
+
+Handle<Value> Game::lookup(const Arguments& args) {
+	HandleScope scope;
+	if(args.Length() < 1) return THROW("getMatrix: requires atleast 1 argument");
+	if(args[0]->IsString()) {
+		String::Utf8Value param(args[0]->ToString());
+		string query = string(*param);
+		if(M->search(query) && db->search(query)) return True();
+		return False();
+	}
+	return THROW("getMatrix: requires a string argument");
+}
+
+Handle<Value> Game::search(const Arguments& args, Game *it) {
+	return True();
+}
+
+//Finally the node part
+void Wordament::Init(Handle<Object> target) {
+	HandleScope scope;
+	//Set all handlers accessible by JavaScript
+	//NODE_SET_METHOD(target, "getMatrix", Wordament::getMatrix);
+	//NODE_SET_METHOD(target, "search", Wordament::search);
+	//NODE_SET_METHOD(target, "solution", Wordament::solution);
+	NODE_SET_METHOD(target, "create", Wordament::create);
+}
+
+Handle<Value> Wordament::create(const Arguments& args) {
+	HandleScope scope;
+	Game g;// = new Game();
+	
+	Local<Object> game = Object::New();
+	game->Set(String::NewSymbol("matrix"), g.matrix() );
+	game->Set(String::NewSymbol("solution"), g.solution() );
+
+	Local<FunctionTemplate> stpl = FunctionTemplate::New(Game::search, &g);
+	//Local<Function> search = stpl->GetFunction();
+	//search->SetName(String::NewSymbol("search"));
+	
+	//game->Set(String::NewSymbol("search"), search);
+	
+	//Local<Function> matrix = FunctionTemplate::New(g->matrix)->GetFunction();
+	//matrix->SetName(String::NewSymbol("matrix"));
+	//game->Set(String::NewSymbol("matrix"), FunctionTemplate::New(g->matrix)->GetFunction());
+	//game->Set(String::NewSymbol("search"), FunctionTemplate::New(g->search)->GetFunction());
+	return scope.Close(game);
+}
+/*
 Handle<Value> Wordament::solution(const Arguments& args) {
 	HandleScope scope;
 	int l = Solution.size();
@@ -204,19 +257,29 @@ Handle<Value> Wordament::getMatrix(const Arguments& args) {
 	HandleScope scope;
 	return scope.Close(String::New( (M->get()).c_str() ));
 }
+*/
+/*
+W::W() { g = new Game(); }
+W::~W() { delete g; }
 
-Handle<Value> Wordament::search(const Arguments& args) {
+Game* W::GameObject() { return g; }
+
+W::Initialize(Handle<Object> target) {
 	HandleScope scope;
-	if(args.Length() < 1) return THROW("getMatrix: requires atleast 1 argument");
-	if(args[0]->IsString()) {
-		String::Utf8Value param(args[0]->ToString());
-		string query = string(*param);
-		if(M->search(query) && db->search(query)) return True();
-		return False();
-	}
-	return THROW("getMatrix: requires a string argument");
+	
+	Local<FunctionTemplate> tmpl = FunctionTemplate::New(New);
+	t->InstanceTemplate()->SetInternalFieldCount(1);
+	
+	SetPrototypeMethod(t, "game", GameObject);
+	
+	target->Set(String::NewSymbol("Wordament"), t->GetFunction());
 }
 
+Handle<Value> W::New(const Arguments& args) {
+	HandleScope scope;
+	
+}
+*/
 extern "C" {
 	//just a wrapper - don't worry about a thing
 	void init(Handle<Object> target) {

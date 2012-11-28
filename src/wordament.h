@@ -50,9 +50,12 @@ public:
 	Wordament();
 	~Wordament();
 	static void Init(Handle<Object>);
-	static Handle<Value> search(const Arguments& args);
+	static Handle<Value> create(const Arguments& args);
+	//static Handle<Value> search(Wordament *word, const Arguments& args);
+	/*
 	static Handle<Value> getMatrix(const Arguments& args);
 	static Handle<Value> solution(const Arguments& args);
+	*/
 };
 
 //Trie 
@@ -97,4 +100,32 @@ public:
 	string get();
 };
 
+//Game
+class Game {
+private:
+	Matrix* M;
+	Trie* db;
+	vector<string> Solution;
+public:
+	Game();
+	~Game();
+	Handle<Value> matrix();
+	Handle<Value> solution();
+	Handle<Value> lookup(const Arguments& args);
+	static Handle<Value> search(const Arguments& args, Game *it);
+};
+
+/*
+class W: ObjectWrap {
+private:
+	static void Initialize(Handle<Object> target);
+	Game* GameObject();
+public:
+	Game* g;
+	W(); ~W();
+	static Handle<Value> New(const Arguments& args);
+	static Handle<Value> search(const Arguments& args);
+};
+
+*/
 #endif //NOLINT
