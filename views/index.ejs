@@ -8,17 +8,13 @@
     <div class="left circularbg">
         <div id="questionContainer">
             <div id="question">
-                <% for(var i=0;i<4;i++) {%>
-                    <% for(var j=0;j<4;j++) {%>
-                        <div id="q<%= i %><%= j%>" class="qid"></div>
-                    <% } %>
-                <% } %>
             </div>
         </div>
         <input type="text" id="answer" />
     </div>
-    <div class="right">
+    <div class="right circularbg">
         <div id="queueContainer">
+            <h3>Found: </h3>
             <ul id="queue">
             </ul>
         </div>

@@ -14,10 +14,24 @@ body {
 }
 
 .left {
-    margin: auto;
+    position: absolute;
+    left: 50%;
+    margin-left: -245px;
     width: 245px;
+    height: 350px;
     border: solid 1px white;
     padding: 50px;
+}
+.right {
+    color: white;
+    position: absolute;
+    left: 50%;
+    margin-left: 101px;
+    width: 150px;
+    border: solid 1px white;
+    padding: 20px;
+    height: 410px;
+    overflow-y: scroll;
 }
 
 #question {
