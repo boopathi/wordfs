@@ -18,7 +18,7 @@ var express = require('express'),
     ejs = require('ejs'),
     io = require('socket.io').listen(server),
     _validate = require('validator'),
-    wordament = require("./build/Release/wordament.node");
+    wordament = require("./build/Release/wordament.node").Wordament;
 
 app.configure( function () {
     app.use(connect.compress());
@@ -42,12 +42,11 @@ app.configure( function () {
 
 io.sockets.on('connection', function(socket) {
     console.log("Connected boopathi" + socket);
-    var game = wordament.create();
-    socket.emit('question', { question: wordament.getMatrix().split(',').splice(0,4) });
+    var game = new wordament();
+    socket.emit('question', { question: game.question.split(',').splice(0,4) });
     socket.on('answer', function(answer) {
-        console.log(answer);
         socket.emit('result', {
-            correct: wordament.search(answer)
+            correct: game.search(answer);
         });
     });
 });

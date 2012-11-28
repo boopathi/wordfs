@@ -283,7 +283,7 @@ void W::Initialize(Handle<Object> target) {
 	Local<FunctionTemplate> t = FunctionTemplate::New(New);
 	t->InstanceTemplate()->SetInternalFieldCount(1);
 	
-	SetPrototypeMethod(t, "game", Search);
+	SetPrototypeMethod(t, "search", Search);
 	
 	target->Set(String::NewSymbol("Wordament"), t->GetFunction());
 }
