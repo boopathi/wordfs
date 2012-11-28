@@ -112,20 +112,20 @@ public:
 	Handle<Value> matrix();
 	Handle<Value> solution();
 	Handle<Value> lookup(const Arguments& args);
-	static Handle<Value> search(const Arguments& args, Game *it);
-};
-
-/*
-class W: ObjectWrap {
-private:
-	static void Initialize(Handle<Object> target);
-	Game* GameObject();
-public:
-	Game* g;
-	W(); ~W();
-	static Handle<Value> New(const Arguments& args);
 	static Handle<Value> search(const Arguments& args);
 };
 
-*/
+
+class W: ObjectWrap {
+public:
+	static void Initialize(Handle<Object> target);
+	W(); ~W();
+	Game* GameObject();
+private:
+	Game* g;
+	static Handle<Value> New(const Arguments& args);
+	static Handle<Value> Search(const Arguments& args);
+};
+
+
 #endif //NOLINT

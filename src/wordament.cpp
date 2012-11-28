@@ -210,7 +210,19 @@ Handle<Value> Game::lookup(const Arguments& args) {
 	return THROW("getMatrix: requires a string argument");
 }
 
-Handle<Value> Game::search(const Arguments& args, Game *it) {
+/*
+ * Implementing a Functor
+Handle<Value> Game::search(Game* g) {
+	struct SEARCH {
+		SEARCH(const Arguments& args):args(args) {} 
+		int operator()(const Arguments& args) { return args; }
+		private: 
+			const Arguments& args;
+	};
+}
+*/
+
+Handle<Value> Game::search(const Arguments& args){
 	return True();
 }
 
@@ -226,13 +238,13 @@ void Wordament::Init(Handle<Object> target) {
 
 Handle<Value> Wordament::create(const Arguments& args) {
 	HandleScope scope;
-	Game g;// = new Game();
+	Game* g = new Game();
 	
 	Local<Object> game = Object::New();
-	game->Set(String::NewSymbol("matrix"), g.matrix() );
-	game->Set(String::NewSymbol("solution"), g.solution() );
+	game->Set(String::NewSymbol("matrix"), g->matrix() );
+	game->Set(String::NewSymbol("solution"), g->solution() );
 
-	Local<FunctionTemplate> stpl = FunctionTemplate::New(Game::search, &g);
+	//Local<FunctionTemplate> stpl = FunctionTemplate::New(Game::search);
 	//Local<Function> search = stpl->GetFunction();
 	//search->SetName(String::NewSymbol("search"));
 	
@@ -258,32 +270,46 @@ Handle<Value> Wordament::getMatrix(const Arguments& args) {
 	return scope.Close(String::New( (M->get()).c_str() ));
 }
 */
-/*
+
+
 W::W() { g = new Game(); }
 W::~W() { delete g; }
 
 Game* W::GameObject() { return g; }
 
-W::Initialize(Handle<Object> target) {
+void W::Initialize(Handle<Object> target) {
 	HandleScope scope;
 	
-	Local<FunctionTemplate> tmpl = FunctionTemplate::New(New);
+	Local<FunctionTemplate> t = FunctionTemplate::New(New);
 	t->InstanceTemplate()->SetInternalFieldCount(1);
 	
-	SetPrototypeMethod(t, "game", GameObject);
+	SetPrototypeMethod(t, "game", Search);
 	
 	target->Set(String::NewSymbol("Wordament"), t->GetFunction());
 }
 
 Handle<Value> W::New(const Arguments& args) {
 	HandleScope scope;
-	
+	W* word = new W();
+	word->Wrap(args.This());
+	args.This()->Set(String::NewSymbol("question"), word->GameObject()->matrix() );
+	args.This()->Set(String::NewSymbol("solution"), word->GameObject()->solution() );
+	return args.This();
 }
-*/
+
+Handle<Value> W::Search(const Arguments& args) {
+	HandleScope scope;
+	W* word = ObjectWrap::Unwrap<W>(args.This()->ToObject());
+	return word->GameObject()->lookup(args);
+	//return g->lookup(args);
+}
+
+
 extern "C" {
 	//just a wrapper - don't worry about a thing
 	void init(Handle<Object> target) {
 		Wordament::Init(target);
+		W::Initialize(target);
 	}
 	NODE_MODULE(wordament, init);
 }
