@@ -31,9 +31,9 @@ var Board = {
             id: "q"+_i+""+_j,
             text: ch,
         });
-        this.select = function() { Board.select.apply(this,e); }
-        this.unselect = function() { Board.unselect.apply(this,e); }
+        this.e = e;
         Board._container.append(e);
+        Board._collection[ch] = this;
     },
     get: function(ch) {
         //convert ASCII to character
@@ -42,13 +42,29 @@ var Board = {
             if(Board._string[i].toLowerCase() === ch) return true;
         return false;
     },
-    select: function(e) {
-        e.css("background", Board._highlight_color);
+    select: function(ch) {
+        Board._collection[ch].e.css("background", Board._highlight_color);
     },
-    unselect: function() {
-        e.css("background", Board._normal_color);
+    unselectall: function() {
+        for(var i in Board._collection)
+            Board._collection[i].e.css("background", Board._normal_color);
+    },
+    unselect: function(ch) {
+        Board._collection[ch].e.css("background", Board._normal_color);
     },
 };
+
+var Queue = {
+    _collection: {},
+    exists: function(a) {
+        if(typeof Queue._collection[a] === "undefined")
+            return false;
+        return true;
+    },
+    append: function(a) {
+        return Queue._collection[a] = true;
+    },
+}
 
 $( function() {
 
@@ -64,10 +80,12 @@ $( function() {
     });
     socket.on('result', function(data) {
         if(data.correct) {
+            Queue.append(data.answer);
             $("#queue").append("<li>"+$("#answer").val()+"</li>");
             $("#answer").val("").css("background","#050").stop().animate({
                 backgroundColor: "#000"
             },750);
+            Board.unselectall();
         }
         else $("#answer").css("background","#500").stop().animate({
             backgroundColor: "#000"
@@ -79,9 +97,15 @@ $( function() {
         if(e.which >=32 && e.which <=126 && !e.ctrlKey && !e.altKey) //printable chars
             if(false === Board.get(e.which) )
                 return false && e.preventDefault();
+            else
+                Board.select(String.fromCharCode(e.which).toLowerCase());
     }).keyup(function(e) {
         this.value = this.value.toUpperCase();
-        if(e.which == 13)
-            socket.emit('answer', this.value.toLowerCase());
+        if(e.which == 13){
+            if(Queue.exists(this.value.toLowerCase()))
+                return;
+            else
+                socket.emit('answer', this.value.toLowerCase());
+        }
     }).focus();
 });

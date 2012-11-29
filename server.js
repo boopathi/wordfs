@@ -46,7 +46,8 @@ io.sockets.on('connection', function(socket) {
     socket.emit('question', { question: game.question.split(',').splice(0,4) });
     socket.on('answer', function(answer) {
         socket.emit('result', {
-            correct: game.search(answer)
+            correct: game.search(answer),
+            answer: answer,
         });
     });
 });
