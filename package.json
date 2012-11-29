@@ -1,7 +1,7 @@
 {
-  "name": "wordament",
+  "name": "Github-Game-off-2012-Wordament",
   "version": "0.0.1",
-  "description": "wordament",
+  "description": "",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
@@ -19,7 +19,8 @@
     "passport-google": "x",
     "passport-facebook": "x",
     "express-params": "x",
-    "validator": "x"
+    "validator": "x",
+    "wordament": "x"
   },
   "engines": {
     "node": "0.8.x"
