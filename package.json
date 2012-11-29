@@ -1,28 +1,21 @@
 {
   "name": "wordament",
-  "version": "0.0.1",
-  "description": "wordament",
+  "version": "v0.1.0",
+  "description": "wordament-web",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "preinstall": "node-gyp configure && node-gyp build",
+    "preuninstall": "rm -rf build/*"
   },
+  "main": "build/Release/wordament.node",
+  "homepage": "https://github.com/heisenbuggers/game-off-2012",
   "repository": {
     "type": "git",
-    "url": "git@github.com:boopathi/wordament.git"
+    "url": "https://github.com/heisenbuggers/game-off-2012"
   },
-  "dependencies": {
-    "express": "3.x",
-    "connect": "x",
-    "ejs": "0.8.x",
-    "socket.io": "x",
-    "passport": "x",
-    "passport-google": "x",
-    "passport-facebook": "x",
-    "express-params": "x",
-    "validator": "x"
-  },
-  "engines": {
-    "node": "0.8.x"
-  },
-  "subdomain": "wordament"
+  "author": {
+    "name": "Boopathi Rajaa",
+    "email": "me@boopathi.in",
+    "url": "http://boopathi.in/"
+  }
 }
