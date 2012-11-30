@@ -260,7 +260,7 @@ Handle<Value> Wordament::create(const Arguments& args) {
 	//game->Set(String::NewSymbol("search"), FunctionTemplate::New(g->search)->GetFunction());
 	return scope.Close(game);
 }
-/*
+
 Handle<Value> Wordament::solution(const Arguments& args) {
 	HandleScope scope;
 	int l = Solution.size();
@@ -273,6 +273,7 @@ Handle<Value> Wordament::getMatrix(const Arguments& args) {
 	HandleScope scope;
 	return scope.Close(String::New( (M->get()).c_str() ));
 }
+
 */
 
 
@@ -312,7 +313,7 @@ Handle<Value> W::Search(const Arguments& args) {
 extern "C" {
 	//just a wrapper - don't worry about a thing
 	void init(Handle<Object> target) {
-		Wordament::Init(target);
+		//Wordament::Init(target);
 		W::Initialize(target);
 	}
 	NODE_MODULE(wordament, init);
