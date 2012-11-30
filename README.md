@@ -1,4 +1,4 @@
-# Wordament module
+# Wordament module [![Build Status](https://secure.travis-ci.org/heisenbuggers/game-off-2012.png?branch=pack-for-npm)](https://travis-ci.org/heisenbuggers/game-off-2012)
 
 This is the C++ module for wordament.
 This is in a separate branch - so that packaging for npm is possible in a simple manner.
