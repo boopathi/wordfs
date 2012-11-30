@@ -166,6 +166,7 @@ bool sort_by_length(string a, string b) {
 	return a.length() < b.length();
 }
 
+
 //Game instances
 Game::Game() {
 	//Make the matrix
@@ -227,6 +228,9 @@ Handle<Value> Game::search(const Arguments& args){
 }
 
 //Finally the node part
+
+/*
+Old code - Working but only one instance of game is possible
 void Wordament::Init(Handle<Object> target) {
 	HandleScope scope;
 	//Set all handlers accessible by JavaScript

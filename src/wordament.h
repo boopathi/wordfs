@@ -44,6 +44,7 @@ using namespace node;
 using namespace std;
 
 //Node stuff
+/*
 class Wordament:ObjectWrap {
 private:
 public:
@@ -52,11 +53,12 @@ public:
 	static void Init(Handle<Object>);
 	static Handle<Value> create(const Arguments& args);
 	//static Handle<Value> search(Wordament *word, const Arguments& args);
-	/*
-	static Handle<Value> getMatrix(const Arguments& args);
-	static Handle<Value> solution(const Arguments& args);
-	*/
+	//static Handle<Value> getMatrix(const Arguments& args);
+	//static Handle<Value> solution(const Arguments& args);
+	
 };
+*/
+
 
 //Trie 
 class Node {
