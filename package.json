@@ -1,15 +1,7 @@
 {
-  "name": "Github-Game-off-2012-Wordament",
-  "version": "0.0.1",
-  "description": "",
+  "version": "0.0.1-4",
+  "description": "Github Game off 2012 - Wordament",
   "main": "server.js",
-  "scripts": {
-    "start": "node server.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:boopathi/wordament.git"
-  },
   "dependencies": {
     "express": "3.x",
     "connect": "x",
@@ -25,5 +17,9 @@
   "engines": {
     "node": "0.8.x"
   },
+  "scripts": {
+    "start": "server.js"
+  },
+  "name": "Github-Game-off-2012-wordament",
   "subdomain": "wordament"
 }
