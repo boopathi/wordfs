@@ -18,7 +18,7 @@ var express = require('express'),
     ejs = require('ejs'),
     io = require('socket.io').listen(server),
     _validate = require('validator'),
-    wordament = require("./build/Release/wordament.node").Wordament;
+    wordament = require("wordament").Wordament;
 
 app.configure( function () {
     app.use(connect.compress());
