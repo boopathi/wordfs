@@ -92,6 +92,7 @@ $( function() {
         },250);
 
     });
+/*
     $("#answer").keypress(function(e) {
         $(this).css("background", "#000");
         if(e.which >=32 && e.which <=126 && !e.ctrlKey && !e.altKey) //printable chars
@@ -108,4 +109,36 @@ $( function() {
                 socket.emit('answer', this.value.toLowerCase());
         }
     }).focus();
+*/
+//mouse drag
+	var flag=0;
+	var x="";
+	var y="";
+	var element = document.getElementById("question");
+	element.addEventListener("mousedown",function(){
+		flag=1;
+		return false;
+	});
+	element.addEventListener("mousemove",function(e){
+		var t = e.target.innerText;
+		var posx = e.offsetX;
+		var posy = e.offsetY;
+		if(flag==1 && (((30-posx)*(30-posx))+((30-posy)*(30-posy))) <= 900){
+			if(y!=t){
+			$(e.target).css("background","#fff");	
+			x += t;
+			y=t;
+		}
+	    return false;	
+	}
+	});
+	element.addEventListener("mouseup",function(){
+		flag=0;
+		$(".qid").animate({backgroundColor : "#ccc"},750);
+		socket.emit('answer', x.toLowerCase());
+	        $("#answer").val(x);
+	        x="";
+		y="";
+		return false;
+	});
 });
