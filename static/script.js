@@ -68,7 +68,12 @@ var Queue = {
 
 var countdown = function(value){
 	this.minute = value[0];
-	this.second = value[1];
+	this.second = value[1]+1;
+};
+
+countdown.prototype.init = function(){
+	           var self = this;
+			   var set = setInterval(function(){self.tick();},1000);
 };
 
 countdown.prototype.tick = function(){
@@ -87,7 +92,7 @@ countdown.prototype.tick = function(){
 countdown.prototype.update = function(){
 	var seconds = this.second;
 	if(seconds<10) seconds = "0" + seconds;
-	$("#answer").val(this.minute + ":" + seconds);
+	$("#timer").val(this.minute + ":" + seconds);
 };
 
 $( function() {
@@ -102,10 +107,10 @@ $( function() {
             }
         }
     });
-	//timerbug to fix
+	//timer
 		socket.on('timer',function(data) {
-        	countdown(data.start);	
-		   var set = setInterval(countdown.tick(),1000);
+        	var time = new countdown(data.start);	
+		    time.init();
 	});
     socket.on('result', function(data) {
         if(data.correct) {
@@ -115,6 +120,7 @@ $( function() {
                 backgroundColor: "#000"
             },750);
             Board.unselectall();
+			$("#score").val(data.score);
         }
         else $("#answer").css("background","#500").stop().animate({
             backgroundColor: "#000"
