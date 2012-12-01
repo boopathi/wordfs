@@ -40,14 +40,31 @@ app.configure( function () {
     }); 
 });
 
+var start_time = "2:00";
+var minute = parseInt(start_time.split(":")[0])*60;
+var second = parseInt(start_time.split(":")[1]);
+var previous_correct_word_time = (minute+second);
+var current_time = previous_correct_word_time;
+var score = 0;
+var game_status = 0;
+
 io.sockets.on('connection', function(socket) {
     console.log("Connected boopathi" + socket);
     var game = new wordament();
     socket.emit('question', { question: game.question.split(',').splice(0,4) });
+	socket.emit('timer', { start : start_time.split(":")});
+	game_status=1;
+	var timer = setInterval(function(){current_time=current_time-1;if(current_time==0){clearInterval(timer);game_status=0;}},1000);
     socket.on('answer', function(answer) {
+		if(game_status){
+		if(game.search(answer)){
+			score= (score+Math.floor(1000/(previous_correct_word_time-current_time)))*answer.length;
+			previous_correct_word_time=current_time;
+		}
+	}
         socket.emit('result', {
             correct: game.search(answer),
-            answer: answer,
+			score : score
         });
     });
 });

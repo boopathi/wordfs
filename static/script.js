@@ -66,6 +66,30 @@ var Queue = {
     },
 }
 
+var countdown = function(value){
+	this.minute = value[0];
+	this.second = value[1];
+};
+
+countdown.prototype.tick = function(){
+	if(this.second > 0 || this.minute > 0){
+		this.second = this.second-1;
+		if(this.second == 0){
+			this.minute = this.minute-1;
+			this.second = 59;
+		}
+		this.update();
+	}
+	else
+		clearInterval(set);
+};
+
+countdown.prototype.update = function(){
+	var seconds = this.second;
+	if(seconds<10) seconds = "0" + seconds;
+	$("#answer").val(this.minute + ":" + seconds);
+};
+
 $( function() {
 
     var socket = io.connect("http://"+window.location.hostname);
@@ -78,6 +102,11 @@ $( function() {
             }
         }
     });
+	//timerbug to fix
+		socket.on('timer',function(data) {
+        	countdown(data.start);	
+		   var set = setInterval(countdown.tick(),1000);
+	});
     socket.on('result', function(data) {
         if(data.correct) {
             Queue.append(data.answer);
