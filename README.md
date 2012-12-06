@@ -1,4 +1,4 @@
-# Wordfs module [![Build Status](https://secure.travis-ci.org/heisenbuggers/game-off-2012.png?branch=pack-for-npm)](https://travis-ci.org/heisenbuggers/game-off-2012)
+# Wordfs module [![Build Status](https://secure.travis-ci.org/boopathi/wordfs.png?branch=pack-for-npm)](https://travis-ci.org/boopathi/wordfs)
 
 This is the C++ module for wordfs.
 This is in a separate branch - so that packaging for npm is possible in a simple manner.
