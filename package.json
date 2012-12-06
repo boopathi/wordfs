@@ -1,16 +1,16 @@
 {
-  "name": "wordament",
+  "name": "wordfs",
   "version": "v0.1.1",
-  "description": "wordament-web",
+  "description": "A single player word game generator",
   "scripts": {
     "preinstall": "node-gyp configure && node-gyp build",
     "preuninstall": "rm -rf build/*"
   },
-  "main": "build/Release/wordament.node",
-  "homepage": "https://github.com/heisenbuggers/game-off-2012",
+  "main": "build/Release/wordfs.node",
+  "homepage": "https://github.com/boopathi/wordfs",
   "repository": {
     "type": "git",
-    "url": "https://github.com/heisenbuggers/game-off-2012"
+    "url": "https://github.com/boopathi/wordfs"
   },
   "author": {
     "name": "Boopathi Rajaa",

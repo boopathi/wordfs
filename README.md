@@ -1,6 +1,6 @@
-# Wordament module [![Build Status](https://secure.travis-ci.org/heisenbuggers/game-off-2012.png?branch=pack-for-npm)](https://travis-ci.org/heisenbuggers/game-off-2012)
+# Wordfs module [![Build Status](https://secure.travis-ci.org/heisenbuggers/game-off-2012.png?branch=pack-for-npm)](https://travis-ci.org/heisenbuggers/game-off-2012)
 
-This is the C++ module for wordament.
+This is the C++ module for wordfs.
 This is in a separate branch - so that packaging for npm is possible in a simple manner.
 
 # Installation
@@ -11,13 +11,13 @@ This is in a separate branch - so that packaging for npm is possible in a simple
 # Usage
 
 ```javascript
-var wordament = require('./build/Release/wordament.node').Wordament; //require("wordament").Wordament; //if using via npm
-var x = new wordament();
+var wordfs = require('./build/Release/wordfs.node').Wordament; //require("wordfs").Wordfs; //if using via npm
+var x = new wordfs();
 console.log(x.question); // <String>
 console.log(x.solution); // <Array>
 console.log(x.answer); // <Function>
 
-if(x.answer("wordament"))
+if(x.answer("wordfs"))
     console.log("Yay");
 else
     console.log("Boo");
