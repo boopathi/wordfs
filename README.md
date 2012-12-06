@@ -1,6 +1,6 @@
-# Wordament webapp
+# Wordfs webapp
 
-Nothing. Just the plain old wordament as a webapp.
+A wordfs webapp - Find words from a matrix in a dfs fashion. 
 
 # Installation
 
