@@ -1,8 +1,8 @@
 {
 	"targets" : [{
-		"target_name": "wordament",
+		"target_name": "wordfs",
 		"sources": [
-			"src/wordament.cpp"
+			"src/wordfs.cpp"
 		],
 	}]
 }
