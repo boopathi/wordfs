@@ -11,7 +11,7 @@ This is in a separate branch - so that packaging for npm is possible in a simple
 # Usage
 
 ```javascript
-var wordfs = require('./build/Release/wordfs.node').Wordament; //require("wordfs").Wordfs; //if using via npm
+var wordfs = require('./build/Release/wordfs.node').Wordfs; //require("wordfs").Wordfs; //if using via npm
 var x = new wordfs();
 console.log(x.question); // <String>
 console.log(x.solution); // <Array>
