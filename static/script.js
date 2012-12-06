@@ -66,6 +66,35 @@ var Queue = {
     },
 }
 
+var countdown = function(value){
+	this.minute = value[0];
+	this.second = value[1]+1;
+};
+
+countdown.prototype.init = function(){
+	           var self = this;
+			   var set = setInterval(function(){self.tick();},1000);
+};
+
+countdown.prototype.tick = function(){
+	if(this.second > 0 || this.minute > 0){
+		this.second = this.second-1;
+		if(this.second == 0){
+			this.minute = this.minute-1;
+			this.second = 59;
+		}
+		this.update();
+	}
+	else
+		clearInterval(set);
+};
+
+countdown.prototype.update = function(){
+	var seconds = this.second;
+	if(seconds<10) seconds = "0" + seconds;
+	$("#timer").val(this.minute + ":" + seconds);
+};
+
 $( function() {
 
     var socket = io.connect("http://"+window.location.hostname);
@@ -78,6 +107,11 @@ $( function() {
             }
         }
     });
+	//timer
+		socket.on('timer',function(data) {
+        	var time = new countdown(data.start);	
+		    time.init();
+	});
     socket.on('result', function(data) {
         if(data.correct) {
             Queue.append(data.answer);
@@ -86,6 +120,7 @@ $( function() {
                 backgroundColor: "#000"
             },750);
             Board.unselectall();
+			$("#score").val(data.score);
         }
         else $("#answer").css("background","#500").stop().animate({
             backgroundColor: "#000"
