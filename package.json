@@ -1,6 +1,6 @@
 {
   "version": "0.0.1-4",
-  "description": "Github Game off 2012 - Wordament",
+  "description": "Wordfs - Find words from a matrix",
   "main": "server.js",
   "dependencies": {
     "express": "3.x",
@@ -20,6 +20,6 @@
   "scripts": {
     "start": "server.js"
   },
-  "name": "Github-Game-off-2012-wordament",
-  "subdomain": "wordament"
+  "name": "wordfs-game",
+  "subdomain": "wordfs"
 }
