@@ -31,7 +31,7 @@
  * 
  */
 
-#include "./wordament.h"
+#include "./wordfs.h"
 #include <string>
 #include <vector>
 #include <algorithm>
@@ -211,70 +211,10 @@ Handle<Value> Game::lookup(const Arguments& args) {
 	return False();
 }
 
-/*
- * Implementing a Functor
-Handle<Value> Game::search(Game* g) {
-	struct SEARCH {
-		SEARCH(const Arguments& args):args(args) {} 
-		int operator()(const Arguments& args) { return args; }
-		private: 
-			const Arguments& args;
-	};
-}
-*/
 
 Handle<Value> Game::search(const Arguments& args){
 	return True();
 }
-
-//Finally the node part
-
-/*
-Old code - Working but only one instance of game is possible
-void Wordament::Init(Handle<Object> target) {
-	HandleScope scope;
-	//Set all handlers accessible by JavaScript
-	//NODE_SET_METHOD(target, "getMatrix", Wordament::getMatrix);
-	//NODE_SET_METHOD(target, "search", Wordament::search);
-	//NODE_SET_METHOD(target, "solution", Wordament::solution);
-	NODE_SET_METHOD(target, "create", Wordament::create);
-}
-
-Handle<Value> Wordament::create(const Arguments& args) {
-	HandleScope scope;
-	Game* g = new Game();
-	
-	Local<Object> game = Object::New();
-	game->Set(String::NewSymbol("matrix"), g->matrix() );
-	game->Set(String::NewSymbol("solution"), g->solution() );
-
-	//Local<FunctionTemplate> stpl = FunctionTemplate::New(Game::search);
-	//Local<Function> search = stpl->GetFunction();
-	//search->SetName(String::NewSymbol("search"));
-	
-	//game->Set(String::NewSymbol("search"), search);
-	
-	//Local<Function> matrix = FunctionTemplate::New(g->matrix)->GetFunction();
-	//matrix->SetName(String::NewSymbol("matrix"));
-	//game->Set(String::NewSymbol("matrix"), FunctionTemplate::New(g->matrix)->GetFunction());
-	//game->Set(String::NewSymbol("search"), FunctionTemplate::New(g->search)->GetFunction());
-	return scope.Close(game);
-}
-
-Handle<Value> Wordament::solution(const Arguments& args) {
-	HandleScope scope;
-	int l = Solution.size();
-	Local<Array> found = Array::New(l);
-	FOR(i,l) found->Set(i, String::New(Solution[i].c_str()));
-	return scope.Close(found);
-}
-
-Handle<Value> Wordament::getMatrix(const Arguments& args) {
-	HandleScope scope;
-	return scope.Close(String::New( (M->get()).c_str() ));
-}
-
-*/
 
 
 W::W() { g = new Game(); }
@@ -290,7 +230,7 @@ void W::Initialize(Handle<Object> target) {
 	
 	SetPrototypeMethod(t, "search", Search);
 	
-	target->Set(String::NewSymbol("Wordament"), t->GetFunction());
+	target->Set(String::NewSymbol("Wordfs"), t->GetFunction());
 }
 
 Handle<Value> W::New(const Arguments& args) {
@@ -313,8 +253,7 @@ Handle<Value> W::Search(const Arguments& args) {
 extern "C" {
 	//just a wrapper - don't worry about a thing
 	void init(Handle<Object> target) {
-		//Wordament::Init(target);
 		W::Initialize(target);
 	}
-	NODE_MODULE(wordament, init);
+	NODE_MODULE(wordfs, init);
 }

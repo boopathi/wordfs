@@ -31,8 +31,8 @@
  * 
  */
 
-#ifndef WORDAMENT_H //NOLINT
-#define WORDAMENT_H "rm -rf /"
+#ifndef WORDFS_H //NOLINT
+#define WORDFS_H "rm -rf /"
 
 #include <v8.h>
 #include <node.h>
@@ -42,22 +42,6 @@
 using namespace v8;
 using namespace node;
 using namespace std;
-
-//Node stuff
-/*
-class Wordament:ObjectWrap {
-private:
-public:
-	Wordament();
-	~Wordament();
-	static void Init(Handle<Object>);
-	static Handle<Value> create(const Arguments& args);
-	//static Handle<Value> search(Wordament *word, const Arguments& args);
-	//static Handle<Value> getMatrix(const Arguments& args);
-	//static Handle<Value> solution(const Arguments& args);
-	
-};
-*/
 
 
 //Trie 
