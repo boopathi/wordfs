@@ -1,16 +1,16 @@
 {
   "name": "wordfs",
-  "version": "v0.1.1",
+  "version": "v0.1.2",
   "description": "A single player word game generator",
   "scripts": {
     "preinstall": "node-gyp configure && node-gyp build",
     "preuninstall": "rm -rf build/*"
   },
   "main": "build/Release/wordfs.node",
-  "homepage": "https://github.com/boopathi/wordfs",
+  "homepage": "https://github.com/boopathi/wordfs/tree/pack-for-npm",
   "repository": {
     "type": "git",
-    "url": "https://github.com/boopathi/wordfs"
+    "url": "https://github.com/boopathi/wordfs/tree/pack-for-npm"
   },
   "author": {
     "name": "Boopathi Rajaa",
