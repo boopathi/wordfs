@@ -18,13 +18,13 @@ var express = require('express'),
     ejs = require('ejs'),
     io = require('socket.io').listen(server),
     _validate = require('validator'),
-    wordament = require("wordament").Wordament;
+    wordfs = require("wordfs").Wordfs;
 
 app.configure( function () {
     app.use(connect.compress());
     app.use(express.bodyParser());
     app.use(express.cookieParser());
-    app.use(express.session({secret: "WORDAMENT :P" }));
+    app.use(express.session({secret: "WORDFS :P" }));
     app.use("/static", express.static(__dirname + "/static"));
     app.set("view engine", 'ejs');
     app.param(function(name, fn){
@@ -42,7 +42,7 @@ app.configure( function () {
 
 io.sockets.on('connection', function(socket) {
     console.log("Connected boopathi" + socket);
-    var game = new wordament();
+    var game = new wordfs();
     socket.emit('question', { question: game.question.split(',').splice(0,4) });
     socket.on('answer', function(answer) {
         socket.emit('result', {
