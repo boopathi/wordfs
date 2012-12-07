@@ -228,7 +228,9 @@ void W::Initialize(Handle<Object> target) {
 	Local<FunctionTemplate> t = FunctionTemplate::New(New);
 	t->InstanceTemplate()->SetInternalFieldCount(1);
 	
-	SetPrototypeMethod(t, "search", Search);
+    NODE_SET_METHOD(t, "search", Search);
+    
+	//SetPrototypeMethod(t, "search", Search);
 	
 	target->Set(String::NewSymbol("Wordfs"), t->GetFunction());
 }
