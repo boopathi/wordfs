@@ -1,6 +1,6 @@
 {
   "name": "wordfs",
-  "version": "v0.1.2",
+  "version": "v0.1.3",
   "description": "A single player word game generator",
   "scripts": {
     "preinstall": "node-gyp configure && node-gyp build",
