@@ -3,6 +3,7 @@
   "description": "Wordfs - Find words from a matrix",
   "main": "server.js",
   "dependencies": {
+    "coffee-script" "*",
     "express": "3.x",
     "connect": "x",
     "ejs": "0.8.x",
