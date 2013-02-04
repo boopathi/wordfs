@@ -1,0 +1,14 @@
+---
+applications:
+  .:
+    name: wordfs
+    framework:
+      name: node
+      info:
+        mem: 64M
+        description: Node.js Application
+        exec: 
+    infra: ap-aws
+    url: wordfs.com
+    mem: 128M
+    instances: 1
