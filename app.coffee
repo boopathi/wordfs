@@ -1,15 +1,75 @@
-/*
- *
- *
- * @author Boopathi Rajaa <http://boopathi.in/>
- * @description app main-file
- * @copyright Copyright (c) 2012 Boopathi Rajaa <http://boopathi.in/>
- * @license <http://www.opensource.org/licenses/mit-license.html>
- *
- *
- */
+###
+#
+#
+# @author Boopathi Rajaa <http://boopathi.in/>
+# @description app main-file
+# @copyright Copyright (c) 2012 Boopathi Rajaa <http://boopathi.in/>
+# @license <http://www.opensource.org/licenses/mit-license.html>
+#
+#
+###
 
-//boiler-plates
+#boiler-plates
+express		= require 'express'
+app		= express()
+connect		= require 'connect'
+params		= require 'express-params'
+server		= require('http').createServer(app).listen(process.env.PORT || 8080)
+ejs		= require 'ejs'
+io 		= require('socket.io').listen(server)
+_validate	= require 'validator'
+wordfs		= require('wordfs').Wordfs
+
+app.configure ()->
+  app.use connect.compress()
+  app.use express.bodyParser()
+  app.use express.cookieParser()
+  app.use express.session
+    secret: 'WORDFS :P'
+  app.set 'view engine', 'ejs'
+
+score = 0
+
+io.sockets.on 'connection', (socket)->
+  game = new wordfs
+  socket.emit 'question'
+    question: game.question.split(',').splice(0,4)
+  socket.on 'answer', (answer)->
+    if game.search answer
+      score = (score+Math.floor(1000/(previous_correct_word_time-current_time)))*answer.length;
+    socket.emit 'result'
+      correct: game.search answer
+      score: score
+
+app.get '/', (req,res)->
+  res.render 'index'
+
+###
+io.sockets.on('connection', function(socket) {
+    console.log("Connected boopathi" + socket);
+    var game = new wordfs();
+    socket.emit('question', { question: game.question.split(',').splice(0,4) });
+	socket.emit('timer', { start : start_time.split(":")});
+	game_status=1;
+	var timer = setInterval(function(){current_time=current_time-1;if(current_time==0){clearInterval(timer);game_status=0;}},1000);
+    socket.on('answer', function(answer) {
+		if(game_status){
+		if(game.search(answer)){
+			score= (score+Math.floor(1000/(previous_correct_word_time-current_time)))*answer.length;
+			previous_correct_word_time=current_time;
+		}
+	}
+        socket.emit('result', {
+            correct: game.search(answer),
+			score : score
+        });
+    });
+});
+
+app.get('/', function(req,res) {
+    res.render('index');
+});
+
 var express = require('express'),
     app = express(),
     connect = require('connect'),
@@ -37,7 +97,7 @@ app.configure( function () {
                 } else next('route');
             }
         }
-    }); 
+    });
 });
 
 var start_time = "2:00";
@@ -48,28 +108,5 @@ var current_time = previous_correct_word_time;
 var score = 0;
 var game_status = 0;
 
-io.sockets.on('connection', function(socket) {
-    console.log("Connected boopathi" + socket);
-    var game = new wordfs();
-    socket.emit('question', { question: game.question.split(',').splice(0,4) });
-	socket.emit('timer', { start : start_time.split(":")});
-	game_status=1;
-	var timer = setInterval(function(){current_time=current_time-1;if(current_time==0){clearInterval(timer);game_status=0;}},1000);
-    socket.on('answer', function(answer) {
-		if(game_status){
-		if(game.search(answer)){
-			score= (score+Math.floor(1000/(previous_correct_word_time-current_time)))*answer.length;
-			previous_correct_word_time=current_time;
-		}
-	}
-        socket.emit('result', {
-            correct: game.search(answer),
-			score : score
-        });
-    });
-});
 
-app.get('/', function(req,res) {
-    res.render('index');
-});
-
+###
