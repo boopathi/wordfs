@@ -1,28 +1,31 @@
 <!doctype html>
 <html>
-    <head>
-        <title>Wordfs | Game</title>
-        <link href="/static/style.css" type="text/css" rel="stylesheet" />
-    </head>
-    <body>
+  <head>
+    <title>Wordfs | Game</title>
+    <link href="/static/style.css" type="text/css" rel="stylesheet" />
+  </head>
+  <body>
     <div class="left circularbg">
-        <div id="questionContainer">
-            <div id="question">
-            </div>
-        </div>
-        <input type="text" id="answer" disabled="disabled"/>
+      <div id="questionContainer">
+        <div id="question">
+          </div>
+      </div>
+      <input type="text" id="answer" disabled="disabled"/>
     </div>
     <div class="right circularbg">
-        <div id="queueContainer">
-		        <input type="text" id="timer" />
-				<input type="text" id="score" />		
-            <h3>Found: </h3>
-            <ul id="queue">
-            </ul>
-        </div>
+      <div id="queueContainer">
+	<input type="text" id="timer" />
+	<input type="text" id="score" />		
+        <h3>Found: </h3>
+        <ul id="queue">
+        </ul>
+      </div>
     </div> 
-        <script src="/socket.io/socket.io.js"></script>
-        <script src="/static/jquery.min.js"></script>
-        <script src="/static/script.js"></script>
-    </body>
+    <script type="text/template" id="tmpl-cellview">
+      <%= value %>
+    </script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/static/jquery.min.js"></script>
+    <script src="/static/2.script.js"></script>
+  </body>
 </html>
