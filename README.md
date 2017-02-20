@@ -1,5 +1,7 @@
 # Wordfs webapp
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/boopathi/wordfs.svg)](https://greenkeeper.io/)
+
 A wordfs webapp - Find words from a matrix in a dfs fashion.
 
 > Status of Wordfs module (npm) : [![Build Status](https://secure.travis-ci.org/boopathi/wordfs.png?branch=pack-for-npm)](https://travis-ci.  org/boopathi/wordfs)
