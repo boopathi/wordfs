@@ -6,7 +6,7 @@
     "coffee-script": "*",
     "express": "3.x",
     "connect": "x",
-    "ejs": "0.8.x",
+    "ejs": "2.5.7",
     "socket.io": "x",
     "passport": "x",
     "passport-google": "x",
